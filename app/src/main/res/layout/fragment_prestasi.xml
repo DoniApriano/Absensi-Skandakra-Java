@@ -3,9 +3,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/mainbg"
     tools:context=".PrestasiFragment">
 
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/tableLayoutPrestasi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+
+            <TableRow
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/border_header_table">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Tingkat"
+                    android:textColor="@android:color/white"
+                    android:padding="10sp"
+                    android:textSize="13dp"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lomba"
+                    android:textColor="@android:color/white"
+                    android:padding="10sp"
+                    android:textSize="13dp"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Juara"
+                    android:textColor="@android:color/white"
+                    android:padding="10sp"
+                    android:textSize="13dp"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    />
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/tvPrestasi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Belum Ada Izin 😉👍"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
 
 
 </FrameLayout>

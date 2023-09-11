@@ -3,19 +3,24 @@ package com.doniapriano.filmapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,8 +28,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +52,8 @@ public class PrestasiFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView user;
+    TextView tvPrestasi;
+    TableLayout tableLayout;
 
     public PrestasiFragment() {
         // Required empty public constructor
@@ -85,6 +97,8 @@ public class PrestasiFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tableLayout = view.findViewById(R.id.tableLayoutPrestasi);
+        tvPrestasi = view.findViewById(R.id.tvPrestasi);
 
         String username = getActivity().getIntent().getStringExtra("username");
         System.out.println(username);
@@ -104,12 +118,21 @@ public class PrestasiFragment extends Fragment {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                // Ambil data pertama dari array JSON
-                                JSONObject jsonObject = response.getJSONArray("user").getJSONObject(0);
-                                // Ambil nama dari objek JSON
-                                String nama = jsonObject.getString("nama");
-                                System.out.println(nama);
-                                user.setText(nama);
+                                if (response.length() > 0) {
+                                    JSONArray cekIzin = response.getJSONArray("prestasi");
+                                    if (cekIzin.length() > 0) {
+                                        for (int i = 0; i < cekIzin.length(); i++) {
+                                            JSONObject jsonObject = response.getJSONArray("prestasi").getJSONObject(i);
+                                            String namaLomba = jsonObject.getString("nama");
+                                            String tingkat = jsonObject.getString("keterangan");
+                                            String juara = jsonObject.getString("juara");
+
+                                            addRowToTable(namaLomba,tingkat,juara);
+                                        }
+                                    } else {
+                                        tvPrestasi.setText("Belum Ada Prestasi 😕\nAyo Semangat!!! 😁👊");
+                                    }
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -126,6 +149,41 @@ public class PrestasiFragment extends Fragment {
         } else {
             alertConnection();
         }
+    }
+
+    private void addRowToTable(String namaLomba, String tingkat, String juara) {
+        TableRow row = new TableRow(getContext());
+        Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_table);
+        row.setBackground(drawable);
+
+        TextView tvNamaLomba = new TextView(getContext());
+        tvNamaLomba.setText(namaLomba);
+        tvNamaLomba.setTextSize(15);
+        tvNamaLomba.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tvNamaLomba.setTextColor(getResources().getColor(R.color.white));
+        tvNamaLomba.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tvNamaLomba.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(tvNamaLomba);
+
+        TextView tvTingkat = new TextView(getContext());
+        tvTingkat.setText(tingkat);
+        tvTingkat.setTextSize(15);
+        tvTingkat.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tvTingkat.setTextColor(getResources().getColor(R.color.white));
+        tvTingkat.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tvTingkat.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(tvTingkat);
+
+        TextView tvJuara = new TextView(getContext());
+        tvJuara.setText(juara);
+        tvJuara.setTextSize(15);
+        tvJuara.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tvJuara.setTextColor(getResources().getColor(R.color.white));
+        tvTingkat.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tvJuara.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(tvJuara);
+
+        tableLayout.addView(row);
     }
 
     public boolean checkNetworkConnection(Context context) {

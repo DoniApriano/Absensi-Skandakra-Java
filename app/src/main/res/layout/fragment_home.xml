@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="Selamat Datang 👋\nDoni Apriano"
+            android:text="Selamat Datang 👋\"
             android:textSize="20dp"
             android:textColor="@color/white"
             android:textStyle="bold" />

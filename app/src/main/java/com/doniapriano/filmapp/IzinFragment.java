@@ -30,11 +30,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +58,7 @@ public class IzinFragment extends Fragment {
     private String mParam2;
 
     TableLayout tableLayout;
+    TextView tvIzin;
 
     public IzinFragment() {
         // Required empty public constructor
@@ -100,7 +106,8 @@ public class IzinFragment extends Fragment {
         System.out.println(username);
 
         String urlDetail = DB.URL_DETAIL+username;
-        tableLayout = view.findViewById(R.id.tableLayout);
+        tableLayout = view.findViewById(R.id.tableLayoutIzin);
+        tvIzin = view.findViewById(R.id.tvIzin);
 
         showData(urlDetail);
     }
@@ -116,25 +123,20 @@ public class IzinFragment extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 0) {
-//                                    TableRow headerRow = new TableRow(getContext());
-//                                    String[] fieldTitles = {"Keterangan", "Alasan", "Tanggal"};
-//                                    for (String title : fieldTitles) {
-//                                        TextView headerText = new TextView(getContext());
-//                                        headerText.setText(title);
-//                                        headerRow.addView(headerText);
-//                                    }
-//
-//                                    tableLayout.addView(headerRow);
-                                    for (int i = 0; i < response.length(); i++) {
-                                        ModelIzin modelIzin = new ModelIzin();
-                                        JSONObject jsonObject = response.getJSONArray("izin").getJSONObject(i);
-                                        String alasan = jsonObject.getString("alasan");
-                                        String keterangan = jsonObject.getString("keterangan");
-                                        String tanggal = jsonObject.getString("tanggal");
+                                    JSONArray cekIzin = response.getJSONArray("izin");
+                                    if (cekIzin.length() > 0) {
+                                        for (int i = 0; i < response.length(); i++) {
+                                            JSONObject jsonObject = response.getJSONArray("izin").getJSONObject(i);
+                                            ModelIzin modelIzin = new ModelIzin();
+                                            String alasan = jsonObject.getString("alasan");
+                                            String keterangan = jsonObject.getString("keterangan");
+                                            String tanggal = jsonObject.getString("tanggal");
 
-                                        addRowToTable(keterangan,alasan,tanggal);
+                                            addRowToTable(keterangan,alasan,tanggal);
+                                        }
+                                    } else {
+                                        tvIzin.setVisibility(View.VISIBLE);
                                     }
-
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -156,16 +158,14 @@ public class IzinFragment extends Fragment {
 
     private void addRowToTable(String keterangan, String alasan, String tanggal) {
         TableRow row = new TableRow(getContext());
-
         Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_table);
-
         row.setBackground(drawable);
 
         TextView tvKeterangan = new TextView(getContext());
         tvKeterangan.setText(keterangan);
         tvKeterangan.setTextSize(15);
         tvKeterangan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvKeterangan.setTextColor(getResources().getColor(R.color.purple));
+        tvKeterangan.setTextColor(getResources().getColor(R.color.white));
         tvKeterangan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         tvKeterangan.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
         row.addView(tvKeterangan);
@@ -174,16 +174,26 @@ public class IzinFragment extends Fragment {
         tvAlasan.setText(alasan);
         tvAlasan.setTextSize(15);
         tvAlasan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvAlasan.setTextColor(getResources().getColor(R.color.purple));
+        tvAlasan.setTextColor(getResources().getColor(R.color.white));
         tvAlasan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         tvAlasan.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
         row.addView(tvAlasan);
 
         TextView tvTanggal = new TextView(getContext());
-        tvTanggal.setText(tanggal);
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd MMMM", new Locale("id", "ID"));
+
+        try {
+            Date date = inputDateFormat.parse(tanggal);
+            String outputDateStr = outputDateFormat.format(date);
+            tvTanggal.setText(outputDateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         tvTanggal.setTextSize(15);
         tvTanggal.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvTanggal.setTextColor(getResources().getColor(R.color.purple));
+        tvTanggal.setTextColor(getResources().getColor(R.color.white));
         tvAlasan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         tvTanggal.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
         row.addView(tvTanggal);

@@ -407,6 +407,8 @@ public class HomeFragment extends Fragment {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
+                            } else {
+                                tvNote.setText("Aduh nyalain GPS mu dulu dong 😕");
                             }
                         }
                     });
