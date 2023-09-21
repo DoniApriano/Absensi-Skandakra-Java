@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/mainbg"
+    android:background="@drawable/main_bg"
     tools:context=".IzinFragment">
 
     <LinearLayout
@@ -41,7 +41,7 @@
                     android:textColor="@android:color/white"
                     android:padding="10sp"
                     android:textSize="13dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:gravity="center_horizontal"
                     />
                 <TextView
@@ -62,7 +62,7 @@
             android:id="@+id/tvIzin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Belum Ada Izin 😉👍"
+            android:text="Belum Ada Izin "
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_gravity="center"

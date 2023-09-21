@@ -130,7 +130,8 @@ public class PrestasiFragment extends Fragment {
                                             addRowToTable(namaLomba,tingkat,juara);
                                         }
                                     } else {
-                                        tvPrestasi.setText("Belum Ada Prestasi 😕\nAyo Semangat!!! 😁👊");
+                                        tvPrestasi.setVisibility(View.VISIBLE);
+                                        tvPrestasi.setText("Belum Ada Prestasi");
                                     }
                                 }
                             } catch (JSONException e) {

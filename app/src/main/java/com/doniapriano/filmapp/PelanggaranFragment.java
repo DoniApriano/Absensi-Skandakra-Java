@@ -14,8 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,19 +32,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link IzinFragment#newInstance} factory method to
+ * Use the {@link PelanggaranFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class IzinFragment extends Fragment {
+public class PelanggaranFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,11 +47,10 @@ public class IzinFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    TextView tvPelanggaran;
     TableLayout tableLayout;
-    TextView tvIzin;
 
-    public IzinFragment() {
+    public PelanggaranFragment() {
         // Required empty public constructor
     }
 
@@ -70,11 +60,11 @@ public class IzinFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment IzinFragment.
+     * @return A new instance of fragment PelanggaranFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static IzinFragment newInstance(String param1, String param2) {
-        IzinFragment fragment = new IzinFragment();
+    public static PelanggaranFragment newInstance(String param1, String param2) {
+        PelanggaranFragment fragment = new PelanggaranFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -95,24 +85,24 @@ public class IzinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_izin, container, false);
+        return inflater.inflate(R.layout.fragment_pelanggaran, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        tableLayout = view.findViewById(R.id.tableLayoutPelanggaran);
+        tvPelanggaran = view.findViewById(R.id.tvPelanggaran);
+
         String username = getActivity().getIntent().getStringExtra("username");
         System.out.println(username);
 
         String urlDetail = DB.URL_DETAIL+username;
-        tableLayout = view.findViewById(R.id.tableLayoutIzin);
-        tvIzin = view.findViewById(R.id.tvIzin);
-
         showData(urlDetail);
     }
 
-    public void showData(String url) {
+    private void showData(String url) {
         if (checkNetworkConnection(this.getContext())) {
             JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(
                     Request.Method.GET,
@@ -123,31 +113,19 @@ public class IzinFragment extends Fragment {
                         public void onResponse(JSONObject response) {
                             try {
                                 if (response.length() > 0) {
-                                    JSONArray cekIzin = response.getJSONArray("izin");
+                                    JSONArray cekIzin = response.getJSONArray("pelanggaran");
                                     if (cekIzin.length() > 0) {
-                                        for (int i = 0; i < response.length(); i++) {
-                                            JSONObject jsonObject = response.getJSONArray("izin").getJSONObject(i);
-                                            ModelIzin modelIzin = new ModelIzin();
-                                            String fAlasan = jsonObject.getString("alasan");
-                                            String fKeterangan = jsonObject.getString("keterangan");
-                                            String fTanggal = jsonObject.getString("tanggal");
+                                        for (int i = 0; i < cekIzin.length(); i++) {
+                                            JSONObject jsonObject = response.getJSONArray("pelanggaran").getJSONObject(i);
+                                            String poin = jsonObject.getString("poin");
+                                            String pelanggaran = jsonObject.getString("pelanggaran");
+                                            String keterangan = jsonObject.getString("keterangan");
 
-                                            String keterangan = "";
-                                            String alasan = fAlasan;
-                                            String tanggal = fTanggal;
-
-                                            if (fKeterangan.equalsIgnoreCase("i")) {
-                                                keterangan = "Izin";
-                                            } else if (fKeterangan.equalsIgnoreCase("s")) {
-                                                keterangan = "Sakit";
-                                            } else if (fKeterangan.equalsIgnoreCase("a")) {
-                                                keterangan = "Alfa";
-                                            }
-
-                                            addRowToTable(keterangan,alasan,tanggal);
+                                            addRowToTable(poin,pelanggaran,keterangan);
                                         }
                                     } else {
-                                        tvIzin.setVisibility(View.VISIBLE);
+                                        tvPelanggaran.setVisibility(View.VISIBLE);
+                                        tvPelanggaran.setText("Belum Ada Pelanggaran");
                                     }
                                 }
                             } catch (JSONException e) {
@@ -168,47 +146,35 @@ public class IzinFragment extends Fragment {
         }
     }
 
-    private void addRowToTable(String keterangan, String alasan, String tanggal) {
+    private void addRowToTable(String poin, String pelanggaran, String keterangan) {
         TableRow row = new TableRow(getContext());
         Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_table);
         row.setBackground(drawable);
+
+        TextView tvPoin = new TextView(getContext());
+        tvPoin.setText(poin);
+        tvPoin.setTextSize(15);
+        tvPoin.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tvPoin.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tvPoin.setTextColor(getResources().getColor(R.color.white));
+        tvPoin.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(tvPoin);
+
+        TextView tvPelanggaran = new TextView(getContext());
+        tvPelanggaran.setText(pelanggaran);
+        tvPelanggaran.setTextSize(15);
+        tvPelanggaran.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tvPelanggaran.setTextColor(getResources().getColor(R.color.white));
+        tvPelanggaran.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(tvPelanggaran);
 
         TextView tvKeterangan = new TextView(getContext());
         tvKeterangan.setText(keterangan);
         tvKeterangan.setTextSize(15);
         tvKeterangan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvKeterangan.setTextColor(getResources().getColor(R.color.white));
-        tvKeterangan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         tvKeterangan.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
         row.addView(tvKeterangan);
-
-        TextView tvAlasan = new TextView(getContext());
-        tvAlasan.setText(alasan);
-        tvAlasan.setTextSize(15);
-        tvAlasan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvAlasan.setTextColor(getResources().getColor(R.color.white));
-        tvAlasan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        tvAlasan.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-        row.addView(tvAlasan);
-
-        TextView tvTanggal = new TextView(getContext());
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd MMMM", new Locale("id", "ID"));
-
-        try {
-            Date date = inputDateFormat.parse(tanggal);
-            String outputDateStr = outputDateFormat.format(date);
-            tvTanggal.setText(outputDateStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        tvTanggal.setTextSize(15);
-        tvTanggal.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvTanggal.setTextColor(getResources().getColor(R.color.white));
-        tvAlasan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        tvTanggal.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-        row.addView(tvTanggal);
 
         tableLayout.addView(row);
     }

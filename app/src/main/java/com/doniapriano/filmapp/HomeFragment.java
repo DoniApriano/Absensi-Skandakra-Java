@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -79,6 +80,7 @@ public class HomeFragment extends Fragment {
     private final static int REQUEST_CODE = 100;
     Calendar calendar;
     ProgressDialog progressDialog;
+    SwipeRefreshLayout swpHome;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -134,6 +136,7 @@ public class HomeFragment extends Fragment {
         imageView = view.findViewById(R.id.image);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvNote = view.findViewById(R.id.tvNote);
+        swpHome = view.findViewById(R.id.swp_home);
         progressDialog = new ProgressDialog(getActivity());
 
         String username = getActivity().getIntent().getStringExtra("username");
@@ -158,7 +161,7 @@ public class HomeFragment extends Fragment {
         calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
-        if (hour >= 7 && hour <= 12) {
+        if (hour >= 6 && hour <= 14) {
             btnAbsent.setText("Absen Masuk");
         } else {
             btnAbsent.setText("Absen Pulang");
@@ -167,7 +170,7 @@ public class HomeFragment extends Fragment {
         btnAbsent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hour >= 7 && hour <= 12) {
+                if (hour >= 6 && hour <= 14) {
                     postAbsen(username);
                 } else {
                     putAbsen(username);
@@ -175,8 +178,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        System.out.println(imageView.getImageMatrix());
-        System.out.println(imageView.getDrawable());
+        swpHome.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swpHome.setRefreshing(true);
+                getLastLocation();
+                swpHome.setRefreshing(false);
+            }
+        });
 
         getLastLocation();
     }
@@ -306,7 +315,7 @@ public class HomeFragment extends Fragment {
                                 // Ambil nama dari objek JSON
                                 String nama = jsonObject.getString("nama");
                                 System.out.println(nama);
-                                tvUsername.setText("Selamat Datang \uD83D\uDC4B \n" + nama);
+                                tvUsername.setText("Selamat Datang \n" + nama);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -381,7 +390,7 @@ public class HomeFragment extends Fragment {
                                 try {
                                     System.err.println(location.isFromMockProvider());
                                     if (location.isFromMockProvider()) {
-                                        alertMock("Hayoo Kamu Pake Fake GPS Ya 😡🤬");
+                                        alertMock("Hayoo Kamu Pake Fake GPS Ya ");
                                         System.out.println("hayoooooooooo");
                                     }
                                     Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -396,11 +405,11 @@ public class HomeFragment extends Fragment {
                                     System.out.println(mLongitude);
 
                                     if ((mLattitude <= utara) && (mLattitude >= selatan) && (mLongitude >= barat) && (mLattitude <= timur)) {
-                                        tvNote.setText("Anda Sudah Berada Di Lokasi 😁\nSilahkan Ambil Gambar 👇");
+                                        tvNote.setText("Anda Sudah Berada Di Lokasi \nSilahkan Ambil Gambar ");
                                         btnCamera.setVisibility(View.VISIBLE);
                                     } else {
                                         btnAbsent.setVisibility(View.INVISIBLE);
-                                        tvNote.setText("Anda Belum Berada Di Lokasi 🙁");
+                                        tvNote.setText("Anda Belum Berada Di Lokasi ");
                                         btnCamera.setVisibility(View.INVISIBLE);
                                     }
 
@@ -408,7 +417,7 @@ public class HomeFragment extends Fragment {
                                     e.printStackTrace();
                                 }
                             } else {
-                                tvNote.setText("Aduh nyalain GPS mu dulu dong 😕");
+                                tvNote.setText("GPS Belum Aktif");
                             }
                         }
                     });

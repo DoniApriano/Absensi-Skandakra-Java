@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#6d77fb</color>
     <color name="gray">#B9B4C7</color>
+    <array name="refresh_colors">
+        <item>@color/gray</item>
+        <item>@color/black</item>
+        <item>@color/purple</item>
+    </array>
 </resources>

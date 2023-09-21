@@ -1,64 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/swp_home"
+    app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/purple"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/mainbg"
     tools:context=".HomeFragment">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="100dp"
-        >
-        <TextView
-            android:layout_gravity="center"
-            android:layout_marginVertical="10dp"
-            android:id="@+id/tvUsername"
-            android:padding="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Selamat Datang 👋\"
-            android:textSize="20dp"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:background="@drawable/main_bg">
 
-        <TextView
-            android:layout_gravity="center"
-            android:id="@+id/tvNote"
-            android:padding="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Anda Belum Ada Di Lokasi"
-            android:textSize="18dp"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnAbsen"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            app:cornerRadius="20dp"
-            android:layout_gravity="center"
-            android:text="Absen"
-            android:visibility="invisible"
-            android:backgroundTint="@color/white"
-            android:paddingHorizontal="100dp"
-            android:textColor="@color/purple"
-            android:textAllCaps="false" />
-
-        <ImageView
-            android:layout_weight="1"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:id="@+id/image"
-            />
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="100dp"
+            >
+            <TextView
+                android:layout_gravity="center"
+                android:layout_marginVertical="10dp"
+                android:id="@+id/tvUsername"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Selamat Datang"
+                android:textSize="20dp"
+                android:background="@drawable/border_header_table"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:background="@drawable/border_header_table"
+                android:layout_gravity="center"
+                android:id="@+id/tvNote"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Anda Belum Ada Di Lokasi"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnAbsen"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                app:cornerRadius="20dp"
+                android:layout_gravity="center"
+                android:text="Absen"
+                android:visibility="invisible"
+                android:backgroundTint="@color/white"
+                android:paddingHorizontal="100dp"
+                android:textColor="@color/purple"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:id="@+id/image"
+                />
+
+        </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
@@ -70,8 +82,10 @@
             android:text="Ambil Gambar"
             android:textColor="@color/white"
             android:backgroundTint="@color/purple"
+            android:layout_gravity="bottom"
             />
 
-    </LinearLayout>
+    </FrameLayout>
 
-</FrameLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

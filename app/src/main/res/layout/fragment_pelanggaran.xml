@@ -15,7 +15,7 @@
         <TableLayout
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="50dp"
-            android:id="@+id/tableLayoutPrestasi"
+            android:id="@+id/tableLayoutPelanggaran"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="1">
@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Tingkat"
+                    android:text="Poin"
                     android:textColor="@android:color/white"
                     android:padding="10sp"
                     android:textSize="13dp"
@@ -38,17 +38,17 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Lomba"
+                    android:text="Pelanggaran"
                     android:textColor="@android:color/white"
                     android:padding="10sp"
                     android:textSize="13dp"
-                    android:layout_weight="2"
+                    android:layout_weight="4"
                     android:gravity="center_horizontal"
                     />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Juara"
+                    android:text="Keterangan"
                     android:textColor="@android:color/white"
                     android:padding="10sp"
                     android:textSize="13dp"
@@ -60,10 +60,10 @@
         </TableLayout>
 
         <TextView
-            android:id="@+id/tvPrestasi"
+            android:id="@+id/tvPelanggaran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Belum Ada Izin 😉👍"
+            android:text="Belum Ada Pelanggaran 😉👍"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_gravity="center"
