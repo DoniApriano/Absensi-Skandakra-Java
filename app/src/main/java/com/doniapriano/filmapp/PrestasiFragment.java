@@ -159,7 +159,7 @@ public class PrestasiFragment extends Fragment {
 
         TextView tvNamaLomba = new TextView(getContext());
         tvNamaLomba.setText(namaLomba);
-        tvNamaLomba.setTextSize(15);
+        tvNamaLomba.setTextSize(12);
         tvNamaLomba.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvNamaLomba.setTextColor(getResources().getColor(R.color.white));
         tvNamaLomba.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -168,7 +168,7 @@ public class PrestasiFragment extends Fragment {
 
         TextView tvTingkat = new TextView(getContext());
         tvTingkat.setText(tingkat);
-        tvTingkat.setTextSize(15);
+        tvTingkat.setTextSize(12);
         tvTingkat.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvTingkat.setTextColor(getResources().getColor(R.color.white));
         tvTingkat.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -177,7 +177,7 @@ public class PrestasiFragment extends Fragment {
 
         TextView tvJuara = new TextView(getContext());
         tvJuara.setText(juara);
-        tvJuara.setTextSize(15);
+        tvJuara.setTextSize(12);
         tvJuara.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvJuara.setTextColor(getResources().getColor(R.color.white));
         tvTingkat.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

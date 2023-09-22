@@ -68,6 +68,7 @@
             android:layout_gravity="center"
             android:textSize="25dp"
             android:visibility="invisible"
+            android:background="@drawable/border_header_table"
             />
 
     </LinearLayout>

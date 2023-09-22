@@ -63,12 +63,13 @@
             android:id="@+id/tvPelanggaran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Belum Ada Pelanggaran 😉👍"
+            android:text="Belum Ada Pelanggaran"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:textSize="25dp"
             android:visibility="invisible"
+            android:background="@drawable/border_header_table"
             />
 
     </LinearLayout>
