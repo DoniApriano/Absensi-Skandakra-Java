@@ -200,10 +200,15 @@ public class HomeFragment extends Fragment {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
                                 String resp = jsonObject.getString("message");
+                                String status = jsonObject.getString("status");
                                 if (resp.equalsIgnoreCase("Berhasil melakukan absen")) {
                                     Toast.makeText(getActivity(), "Absen Berhasil", Toast.LENGTH_SHORT).show();
+                                    System.out.println(status);
                                     alertAbsen();
-                                } else {
+                                } else if (resp.equalsIgnoreCase("Sudah melakukan absen")) {
+                                    System.out.println(status);
+                                    alertSudahAbsen();
+                                }else {
                                     alert("Yah Gagal");
                                 }
                             } catch (JSONException e) {
@@ -214,7 +219,7 @@ public class HomeFragment extends Fragment {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            alertSudahAbsen();
                         }
                     }
             ) {
@@ -468,6 +473,22 @@ public class HomeFragment extends Fragment {
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         mView.findViewById(R.id.okBTN).setOnClickListener(v -> {
+            alertDialog.dismiss();
+        });
+
+        alertDialog.show();
+    }
+
+    private void alertSudahAbsen(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this.getContext());
+        View mView = getLayoutInflater().inflate(R.layout.dialog_sudah_absen, null);
+        alert.setView(mView);;
+
+        final AlertDialog alertDialog = alert.create();
+        alertDialog.setCancelable(false);
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        mView.findViewById(R.id.okBTNsdh).setOnClickListener(v -> {
             alertDialog.dismiss();
         });
 

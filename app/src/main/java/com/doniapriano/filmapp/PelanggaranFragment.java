@@ -47,7 +47,7 @@ public class PelanggaranFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView tvPelanggaran;
+    TextView tvPelanggaran, tvTotalPoin;
     TableLayout tableLayout;
 
     public PelanggaranFragment() {
@@ -94,6 +94,7 @@ public class PelanggaranFragment extends Fragment {
 
         tableLayout = view.findViewById(R.id.tableLayoutPelanggaran);
         tvPelanggaran = view.findViewById(R.id.tvPelanggaran);
+        tvTotalPoin = view.findViewById(R.id.tvTotalPelanggaran);
 
         String username = getActivity().getIntent().getStringExtra("username");
         System.out.println(username);
@@ -119,9 +120,8 @@ public class PelanggaranFragment extends Fragment {
                                             JSONObject jsonObject = response.getJSONArray("pelanggaran").getJSONObject(i);
                                             String poin = jsonObject.getString("poin");
                                             String pelanggaran = jsonObject.getString("pelanggaran");
-                                            String keterangan = jsonObject.getString("keterangan");
 
-                                            addRowToTable(poin,pelanggaran,keterangan);
+                                            addRowToTable(pelanggaran, poin);
                                         }
                                     } else {
                                         tvPelanggaran.setVisibility(View.VISIBLE);
@@ -146,35 +146,27 @@ public class PelanggaranFragment extends Fragment {
         }
     }
 
-    private void addRowToTable(String poin, String pelanggaran, String keterangan) {
+    private void addRowToTable(String pelanggaran,String poin) {
         TableRow row = new TableRow(getContext());
         Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_table);
         row.setBackground(drawable);
 
-        TextView tvPoin = new TextView(getContext());
-        tvPoin.setText(poin);
-        tvPoin.setTextSize(15);
-        tvPoin.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        tvPoin.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvPoin.setTextColor(getResources().getColor(R.color.white));
-        tvPoin.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-        row.addView(tvPoin);
-
         TextView tvPelanggaran = new TextView(getContext());
         tvPelanggaran.setText(pelanggaran);
-        tvPelanggaran.setTextSize(15);
+        tvPelanggaran.setTextSize(12);
         tvPelanggaran.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvPelanggaran.setTextColor(getResources().getColor(R.color.white));
         tvPelanggaran.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
         row.addView(tvPelanggaran);
 
-        TextView tvKeterangan = new TextView(getContext());
-        tvKeterangan.setText(keterangan);
-        tvKeterangan.setTextSize(15);
-        tvKeterangan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        tvKeterangan.setTextColor(getResources().getColor(R.color.white));
-        tvKeterangan.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
-        row.addView(tvKeterangan);
+        TextView tvPoin = new TextView(getContext());
+        tvPoin.setText(poin);
+        tvPoin.setTextSize(12);
+        tvPoin.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tvPoin.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tvPoin.setTextColor(getResources().getColor(R.color.white));
+        tvPoin.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+        row.addView(tvPoin);
 
         tableLayout.addView(row);
     }

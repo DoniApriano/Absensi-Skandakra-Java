@@ -175,7 +175,7 @@ public class IzinFragment extends Fragment {
 
         TextView tvKeterangan = new TextView(getContext());
         tvKeterangan.setText(keterangan);
-        tvKeterangan.setTextSize(15);
+        tvKeterangan.setTextSize(12);
         tvKeterangan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvKeterangan.setTextColor(getResources().getColor(R.color.white));
         tvKeterangan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -184,7 +184,7 @@ public class IzinFragment extends Fragment {
 
         TextView tvAlasan = new TextView(getContext());
         tvAlasan.setText(alasan);
-        tvAlasan.setTextSize(15);
+        tvAlasan.setTextSize(12);
         tvAlasan.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvAlasan.setTextColor(getResources().getColor(R.color.white));
         tvAlasan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -203,7 +203,7 @@ public class IzinFragment extends Fragment {
             e.printStackTrace();
         }
 
-        tvTanggal.setTextSize(15);
+        tvTanggal.setTextSize(12);
         tvTanggal.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         tvTanggal.setTextColor(getResources().getColor(R.color.white));
         tvAlasan.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

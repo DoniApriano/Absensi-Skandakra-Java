@@ -27,17 +27,6 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Poin"
-                    android:textColor="@android:color/white"
-                    android:padding="10sp"
-                    android:textSize="13dp"
-                    android:layout_weight="4"
-                    android:gravity="center_horizontal"
-                    />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:text="Pelanggaran"
                     android:textColor="@android:color/white"
                     android:padding="10sp"
@@ -48,13 +37,15 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Keterangan"
+                    android:text="Poin"
                     android:textColor="@android:color/white"
                     android:padding="10sp"
                     android:textSize="13dp"
                     android:layout_weight="4"
                     android:gravity="center_horizontal"
                     />
+
+
             </TableRow>
 
         </TableLayout>
@@ -68,6 +59,19 @@
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:textSize="25dp"
+            android:visibility="invisible"
+            android:background="@drawable/border_header_table"
+            />
+
+        <TextView
+            android:id="@+id/tvTotalPelanggaran"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Poin kamu sudah mencapai 90"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textSize="20dp"
             android:visibility="invisible"
             android:background="@drawable/border_header_table"
             />
